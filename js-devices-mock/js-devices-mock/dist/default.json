@@ -1,0 +1,8 @@
+{
+  "rabbitMQ": {
+    "url": "amqps://localhost",
+    "cert": "C:\\Certs/client_certificate.pem",
+    "key": "C:\\Certs/client_key.pem",
+    "ca": "C:\\Certs/ca_certificate.pem"
+  }
+}
