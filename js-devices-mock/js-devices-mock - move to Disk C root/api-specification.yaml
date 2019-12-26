@@ -1,0 +1,207 @@
+openapi: "3.0.0"
+info:
+  version: 2.0.0
+  title: Mock Configuration
+servers:
+  - url: http://localhost:3030/
+    description: Fingerprint Mock Server
+  - url: http://localhost:3031/
+    description: Iris Mock Server
+  - url: http://localhost:3032/
+    description: Desko Mock Server
+paths:
+  /injectTestData:
+    post:
+      summary: Inject test data to change mock behavior
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Behavior"
+      tags:
+        - injectTestData
+      responses:
+        "204":
+          description: Success
+        "400":
+          description: Bad request
+  /sendResult:
+    post:
+      summary: Trigger the sending of the result data from the capture
+      tags:
+        - sendResult
+      responses:
+        "204":
+          description: Success
+        "409":
+          description: Conflict
+components:
+  schemas:
+    Behavior:
+      type: "object"
+      properties:
+        status:
+          oneOf:
+            - type: "string"
+              enum:
+                - "ready"
+                - "processing"
+                - "sleep"
+                - "captured"
+                - "prepared"
+                - "error"
+                - "restart"
+            - $ref: "#/components/schemas/Error"
+        prepare:
+          oneOf:
+            - $ref: "#/components/schemas/Prepare"
+            - $ref: "#/components/schemas/Error"
+        capture:
+          oneOf:
+            - type: boolean
+              default: true
+            - $ref: "#/components/schemas/Error"
+        abort:
+          oneOf:
+            - type: boolean
+              default: true
+            - $ref: "#/components/schemas/Error"
+        unprepare:
+          oneOf:
+            - type: boolean
+              default: true
+            - $ref: "#/components/schemas/Error"
+        previewPayload:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/FingerprintPreviewPayload"
+              - $ref: "#/components/schemas/IrisPreviewPayload"
+        resultPayload:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/FingerprintResult"
+              - $ref: "#/components/schemas/IrisResult"
+              - $ref: "#/components/schemas/FaceResult"
+              - $ref: "#/components/schemas/BoardingPassResult"
+              - $ref: "#/components/schemas/DriversLicenseResult"
+    FingerprintPreviewPayload:
+      type: object
+      properties:
+        image:
+          type: string
+        quality:
+          type: array
+          items:
+            type: string
+        width:
+          type: integer
+        height:
+          type: integer
+    IrisPreviewPayload:
+      type: object
+      properties:
+        image:
+          type: string
+        quality:
+          type: array
+          items:
+            type: string
+        width:
+          type: integer
+        height:
+          type: integer
+        mode:
+          type: string
+          default: "RGB"
+    FingerprintResult:
+      type: object
+      properties:
+        image:
+          type: string
+        position:
+          type: array
+          items:
+            type: object
+        score:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+        pitch:
+          type: integer
+        resolution_x:
+          type: integer
+        resolution_y:
+          type: integer
+        message:
+          type: string
+        wsq:
+          type: array
+          items:
+            type: string
+    IrisResult:
+      type: object
+      properties:
+        left_eye:
+          type: string
+        right_eye:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+        mode:
+          type: string
+          default: "P"
+    FaceResult:
+      type: object
+      properties:
+        face:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+        mode:
+          type: string
+          default: "RGB"
+    BoardingPassResult:
+      type: object
+      properties:
+        boarding_pass:
+          type: string
+    DriversLicenseResult:
+      type: object
+      properties:
+        uv_image:
+          type: string
+        ir_image:
+          type: string
+        visible_light_image:
+          type: string
+    Prepare:
+      type: "object"
+      properties:
+        port:
+          type: "integer"
+        response:
+          type: "boolean"
+        socketKey:
+          type: "string"
+    Error:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          enum:
+            - "No data sent"
+            - "Sender not allowed to perform action on this device"
+            - "Unregistered callback for method 'method'"
+            - "Invalid data format. Try {'method': ...,'payload':...}"
+            - "Unable to decode message"
+            - "Encryption key not found for service ''. Performing handshake..."
+            - "SENDER ID not allowed: ''"
