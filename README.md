@@ -1,6 +1,7 @@
 ## disable-screen-turn-off
-1. (Optional) You can build your own executable with [this script](./disable-screen-turn-off/generate%20mouse.bat)
-2. Run [disable turn off.bat](./disable-screen-turn-off/disable%20turn%20off.bat)
+1. (Optional) You can build your own [mouse.exe](./disable-screen-turn-off/mouse.exe) with [this script](./disable-screen-turn-off/generate%20mouse.bat)
+2. Add the [mouse.exe](./disable-screen-turn-off/mouse.exe) containing folder to the PATH environment variable
+3. Run [disable turn off.bat](./disable-screen-turn-off/disable%20turn%20off.bat)
 
 
 ## vDesk (Optional)
