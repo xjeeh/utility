@@ -4,10 +4,10 @@
 
 
 ## vDesk (Optional)
-If you wanna startup the script with Windows on another virtual desktop:
+If you wanna automatically startup the script with Windows on another virtual desktop:
 
 1. Download and install https://github.com/eksime/VDesk/releases
 2. Create a new shortcut
 > "C:\Program Files (x86)\VDesk\VDesk.exe" on:2 run:"C:/projects/utility/disable-screen-turn-off/prevent-sleep.ps1"
-3. Move the shortcut to startup:
+3. Move the shortcut to startup folder:
 > %AppData%\Microsoft\Windows\Start Menu\Programs\Startup 
