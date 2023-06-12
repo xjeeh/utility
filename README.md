@@ -1,6 +1,6 @@
 ## disable-screen-turn-off
 1. (Optional) You can build your own executable with [this script](./disable-screen-turn-off/generate%20mouse.bat)
-2. Run [disable turn off.bat](./disable turn%20off/disable%20turn off.bat)
+2. Run [disable turn off.bat](./disable-screen-turn-offmouse.exe)
 
 
 ## vDesk (Optional)
